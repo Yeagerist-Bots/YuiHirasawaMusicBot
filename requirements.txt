@@ -19,3 +19,4 @@ wget
 ffmpeg
 motor
 pymongo
+dnspython
