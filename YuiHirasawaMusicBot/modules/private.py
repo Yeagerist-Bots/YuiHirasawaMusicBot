@@ -20,10 +20,10 @@ logging.basicConfig(level=logging.INFO)
 
 @Client.on_message(filters.private & filters.incoming & filters.command(['start']))
 def _start(client, message):
-   AddUserToDatabase(client, message)
-   FSub = await ForceSub(client, message)
-    if FSub == 400:
-        return
+   AddUserToDatabase(bot: Client, cmd: Message)
+   FSub = await ForceSub(bot: Client, cmd: Message)
+   if FSub == 400:
+      return
     client.send_message(message.chat.id,
         text=tr.START_MSG.format(message.from_user.first_name, message.from_user.id),
         parse_mode="markdown",
@@ -48,8 +48,8 @@ def _start(client, message):
 
 @Client.on_message(filters.command("start") & ~filters.private & ~filters.channel)
 async def gstart(_, message: Message):
-    await AddUserToDatabase(bot, m)
-    FSub = await ForceSub(bot, m)
+    await AddUserToDatabase(bot: Client, cmd: Message)
+    FSub = await ForceSub(bot: Client, cmd: Message)
     if FSub == 400:
         return
     await message.reply_text(
@@ -68,8 +68,8 @@ async def gstart(_, message: Message):
 
 @Client.on_message(filters.private & filters.incoming & filters.command(['help']))
 async def _help(client, message):
-    await AddUserToDatabase(bot, m)
-    FSub = await ForceSub(bot, m)
+    await AddUserToDatabase(bot: Client, cmd: Message)
+    FSub = await ForceSub(bot: Client, cmd: Message)
     if FSub == 400:
         return
     client.send_message(chat_id = message.chat.id,
