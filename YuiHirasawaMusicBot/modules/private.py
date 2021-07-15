@@ -20,11 +20,8 @@ logging.basicConfig(level=logging.INFO)
 
 @Client.on_message(filters.private & filters.incoming & filters.command(['start']))
 def _start(client, message):
-   AddUserToDatabase(bot: Client, cmd: Message)
-   FSub = await ForceSub(bot: Client, cmd: Message)
-   if FSub == 400:
-      return
-    client.send_message(message.chat.id,
+   await AddUserToDatabase(bot: Client, cmd: Message)
+   await client.send_message(message.chat.id,
         text=tr.START_MSG.format(message.from_user.first_name, message.from_user.id),
         parse_mode="markdown",
         reply_markup=InlineKeyboardMarkup(
@@ -49,9 +46,6 @@ def _start(client, message):
 @Client.on_message(filters.command("start") & ~filters.private & ~filters.channel)
 async def gstart(_, message: Message):
     await AddUserToDatabase(bot: Client, cmd: Message)
-    FSub = await ForceSub(bot: Client, cmd: Message)
-    if FSub == 400:
-        return
     await message.reply_text(
         f"""**🔴 {PROJECT_NAME} is online**""",
         reply_markup=InlineKeyboardMarkup(
@@ -69,10 +63,7 @@ async def gstart(_, message: Message):
 @Client.on_message(filters.private & filters.incoming & filters.command(['help']))
 async def _help(client, message):
     await AddUserToDatabase(bot: Client, cmd: Message)
-    FSub = await ForceSub(bot: Client, cmd: Message)
-    if FSub == 400:
-        return
-    client.send_message(chat_id = message.chat.id,
+    await client.send_message(chat_id = message.chat.id,
         text = tr.HELP_MSG[1],
         parse_mode="markdown",
         disable_web_page_preview=True,
